@@ -8,6 +8,7 @@ class AnthropicModel(BaseModel):
         super().__init__(api_key)
         self._api_key = api_key
         self.client = Anthropic(api_key=self._api_key)
+        self.Completion = self.Completion(self)
 
     def set_api_key(self, key):
         super().set_api_key(key)
@@ -36,3 +37,12 @@ class AnthropicModel(BaseModel):
     #     def create(self, messages, **kwargs):
     #         prompt = messages[0].get('content')
     #         return self.parent.query(prompt, **kwargs)
+    class Completion:
+        def __init__(self, parent):
+            self.parent = parent
+
+        def create(self, engine, prompt, **kwargs):
+            if engine:
+                kwargs['model'] = engine
+            return self.parent.query(prompt, engine, **kwargs)
+

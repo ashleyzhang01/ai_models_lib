@@ -10,7 +10,6 @@ class OpenAIModel(BaseModel):
         self._api_key = api_key
         self.client = OpenAI(api_key=self._api_key)
         self.Completion = self.Completion(self)
-        self.response = None
 
     def set_api(self, key):
         super().set_api_key(key)

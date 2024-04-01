@@ -31,20 +31,33 @@ def test_query_simplified():
 def test_call_anthropic():
     anthropic_client = anthropic(API_KEY)
     response = anthropic_client.client.messages.create(
-        model="claude-3-opus-20240229",
         max_tokens=1000,
         messages=[
             {"role": "user", "content": "What is the capital of France?"}
         ],
+        model="claude-3-opus-20240229",
     )
     print(response.content[0].text)
     # TODO: test with kwargs
+
+
+def test_openai_format():
+    client = anthropic(API_KEY)
+    response = client.Completion.create(
+        engine="claude-3-opus-20240229",
+        prompt="What is 100-10?",
+        max_tokens=50,
+        temperature=0.7,
+        top_p=1,
+    )
+    print(response.content[0].text)
 
 
 def main():
     test_query_by_provider()
     test_query_simplified()
     test_call_anthropic()
+    test_openai_format()
 
 
 if __name__ == "__main__":

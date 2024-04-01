@@ -45,6 +45,7 @@ def test_call_client_deprecated():
 
 
 def test_call_openai():
+    # chat completions
     openai_client = openai(API_KEY)
     response = openai_client.client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -55,13 +56,22 @@ def test_call_openai():
     )
     print(response.choices[0].message.content)
     # TODO: test with kwargs
+    # images
+    image = openai_client.client.images.generate(
+        model="dall-e-3",
+        prompt="A cute baby sea otter",
+        n=1,
+        size="1024x1024"
+    )
+    print(image)
+    print(image.data[0].url)
 
 
 def main():
     test_query_by_provider()
     test_query_simplified()
     test_call_client_deprecated()
-    test_call_openai()
+    # test_call_openai()
 
 
 if __name__ == "__main__":
