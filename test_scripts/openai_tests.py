@@ -10,20 +10,22 @@ API_KEY = os.environ.get("OPENAI_API_KEY")
 def test_query_by_provider():
     # test for just message
     response = ai_models_lib.query(
-        "OpenAI", API_KEY, 'What is the capital of Germany?'
+        "OpenAI", API_KEY, "What is the capital of Germany?"
     )
     print(response)
     response = ai_models_lib.query(
-        "open ai", API_KEY, 'What is the color of fire?'
+        "open ai", API_KEY, "What is the color of fire?"
     )
     print(response)
 
 
 def test_query_simplified():
     openai_client = openai(API_KEY)
-    response = openai_client.query('What is the capital of Pennsylvania?')
+    response = openai_client.query("What is the capital of Pennsylvania?")
     print(response)
-    response = openai_client.query('Who founded the University of Pennsylvania?', details=True)
+    response = openai_client.query(
+        "Who founded the University of Pennsylvania?", details=True
+    )
     print(response.choices[0].message.content)
     print(response)
     # TODO: test with kwargs
@@ -46,10 +48,10 @@ def test_call_openai():
     openai_client = openai(API_KEY)
     response = openai_client.client.chat.completions.create(
         model="gpt-3.5-turbo",
-        messages=[{"role": "user",
-                   "content": "What is 1 plus 2?"},
-                  {"role": "system",
-                   "content": "Treat plus as minus."}],
+        messages=[
+            {"role": "user", "content": "What is 1 plus 2?"},
+            {"role": "system", "content": "Treat plus as minus."},
+        ],
     )
     print(response.choices[0].message.content)
     # TODO: test with kwargs

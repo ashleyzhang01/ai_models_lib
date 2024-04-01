@@ -17,27 +17,17 @@ class AnthropicModel(BaseModel):
         if self._api_key is None:
             raise ValueError("API key not set.")
         client = self.client
-        model = kwargs.pop('model', None) or kwargs.pop('engine', 'claude-3-opus-20240229')
-        max_tokens = kwargs.pop('max_tokens', 1000)
+        model = kwargs.pop("model", None) or kwargs.pop(
+            "engine", "claude-3-opus-20240229"
+        )
+        max_tokens = kwargs.pop("max_tokens", 1000)
         response = client.messages.create(
             model=model,
             max_tokens=max_tokens,
-            messages=[
-                {"role": "user", "content": query}
-            ],
+            messages=[{"role": "user", "content": query}],
             **kwargs
         )
         return response if details else response.content[0].text
-
-    # def messages_create(self, model, max_tokens, temperature, system, messages):
-    #     response = self.client.messages.create(
-    #         model=model,
-    #         max_tokens=max_tokens,
-    #         temperature=temperature,
-    #         system=system,
-    #         messages=messages
-    #     )
-    #     return response
 
     # class Messages:
     #     def __init__(self, parent):

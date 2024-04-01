@@ -20,10 +20,13 @@ class OpenAIModel(BaseModel):
         if self._api_key is None:
             raise ValueError("API key not set.")
         client = OpenAI(api_key=self._api_key)
-        model = kwargs.pop('model', None) or kwargs.pop('engine', 'gpt-3.5-turbo')
+        model = (kwargs.pop("model", None) or
+                 kwargs.pop("engine", "gpt-3.5-turbo"))
         response = client.chat.completions.create(
             model=model,
-            messages=[{"role": "user", "content": query}], **kwargs)
+            messages=[{"role": "user", "content": query}],
+            **kwargs
+        )
         return response if details else response.choices[0].message.content
 
     class Completion:
