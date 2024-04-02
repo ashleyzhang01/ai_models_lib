@@ -30,7 +30,7 @@ However, under this query format, you can't choose which engine/model under the 
 
 ### Less Simple Queries:
 Each provider model has a `query` function that allows you to easily make queries to that provider with different models/engines and other arguments. 
-`provider_client = <provider>(API_KEY)` initializes the provider's model with your api key. There's a default model/engine provided for each provider, but you can set a model yourself, along with others arguments such as tokens. This also depends on the original provider and what they can take in. `details` is defaulted to `False`, and that will just return the response message text, but if you set `details` to `True`, it'll return the whole response from the call to the provider. 
+Import a specific model with `from ai_models_lib import <provider>` (or you can do `ai_models_lib.<provider>` for each call for the same functionality). Then, `provider_client = <provider>(API_KEY)` initializes the provider's model with your api key. There's a default model/engine provided for each provider, but you can set a model yourself, along with others arguments such as tokens. This also depends on the original provider and what they can take in. `details` is defaulted to `False`, and that will just return the response message text, but if you set `details` to `True`, it'll return the whole response from the call to the provider. 
 
 Here are some examples: 
 
