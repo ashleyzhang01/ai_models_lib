@@ -14,13 +14,13 @@ class AnthropicModel(BaseModel):
         super().set_api_key(key)
         self.client = Anthropic(api_key=self._api_key)
 
-    def query(self, query, details=False, **kwargs):
+    def query(self, query, model="claude-3-opus-20240229", details=False, **kwargs):
         if self._api_key is None:
             raise ValueError("API key not set.")
         client = self.client
-        model = kwargs.pop("model", None) or kwargs.pop(
-            "engine", "claude-3-opus-20240229"
-        )
+        if (kmodel := kwargs.pop("model", None) or kwargs.pop(
+            "engine", "claude-3-opus-20240229")):
+            model = kmodel
         max_tokens = kwargs.pop("max_tokens", 1000)
         response = client.messages.create(
             model=model,
@@ -45,7 +45,6 @@ class AnthropicModel(BaseModel):
             if engine:
                 kwargs['model'] = engine
             response = self.parent.query(prompt, details=True, **kwargs)
-            print(response)
             transformed_response = {
                 "id": response.id,
                 "object": response.type,

@@ -15,12 +15,13 @@ class TogetherModel(BaseModel):
         super().set_api_key(key)
         self.client = together(api_key=self._api_key)
 
-    def query(self, query, details=False, **kwargs):
+    def query(self, query, model="mistralai/Mixtral-8x7B-Instruct-v0.1", details=False, **kwargs):
         if self._api_key is None:
             raise ValueError("API key not set.")
         together.api_key = self._api_key
-        model = (kwargs.pop("model", None) or
-                 kwargs.pop("engine", "mistralai/Mixtral-8x7B-Instruct-v0.1"))
+        if (kmodel := kwargs.pop("model", None) or kwargs.pop(
+            "engine", "mistralai/Mixtral-8x7B-Instruct-v0.1")):
+            model = kmodel
         response = together.Complete.create(
             prompt=f"[INST] {query} [/INST]",
             model=model,

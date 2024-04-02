@@ -42,9 +42,9 @@ def test_openai_format():
 def main():
     # test_query_by_provider()
     # test_query_simplified()
-    # test_call_together()
+    # TODO: test_call_together()
     test_openai_format()
-
+    
 
 if __name__ == "__main__":
     main()

@@ -31,7 +31,7 @@ def test_query_simplified():
 def test_call_anthropic():
     anthropic_client = anthropic(API_KEY)
     response = anthropic_client.client.messages.create(
-        max_tokens=1000,
+        max_tokens=50,
         messages=[
             {"role": "user", "content": "What is the capital of France?"}
         ],
@@ -55,9 +55,9 @@ def test_openai_format():
 
 
 def main():
-    # test_query_by_provider()
-    # test_query_simplified()
-    # test_call_anthropic()
+    test_query_by_provider()
+    test_query_simplified()
+    test_call_anthropic()
     test_openai_format()
 
 
