@@ -13,6 +13,7 @@ API_KEY = os.environ.get("REPLICATE_API_KEY")
 #     )
 # print(output)
 
+
 def test_query_by_provider():
     # test for just message
     response = ai_models_lib.query(
@@ -33,7 +34,7 @@ def test_call_replicate():
         "meta/llama-2-70b-chat",
         input={
             "system_prompt": "Pinocchio is the Disney character whose nose grows when he lies.",
-            "prompt": "In that fictional world, would happen if Pinocchio said 'my nose will now grow'?"
+            "prompt": "In that fictional world, would happen if Pinocchio said 'my nose will now grow'?",
         },
     )
     print(response)

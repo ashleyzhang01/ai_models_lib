@@ -14,6 +14,7 @@ def test_query_by_provider():
     )
     print(response)
 
+
 def test_query_simplified():
     together_client = together(API_KEY)
     response = together_client.query("What is the capital of Pennsylvania?")
@@ -21,7 +22,7 @@ def test_query_simplified():
     response = together_client.query(
         "Who founded the University of Pennsylvania?", details=True
     )
-    print(response['output']['choices'][0]['text'])
+    print(response["output"]["choices"][0]["text"])
     print(response)
     # TODO: test with kwargs
     # TODO: test model vs engine
@@ -32,8 +33,8 @@ def test_openai_format():
     response = together_client.Completion.create(
         engine="mistralai/Mixtral-8x7B-Instruct-v0.1",
         prompt="What color is water?",
-        max_tokens = 50,
-        temperature = 0.8,
+        max_tokens=50,
+        temperature=0.8,
     )
     print(response["choices"][0]["message"]["content"])
     # TODO: test without kwargs
@@ -44,7 +45,7 @@ def main():
     # test_query_simplified()
     # TODO: test_call_together()
     test_openai_format()
-    
+
 
 if __name__ == "__main__":
     main()

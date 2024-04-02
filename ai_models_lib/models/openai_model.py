@@ -19,13 +19,10 @@ class OpenAIModel(BaseModel):
         if self._api_key is None:
             raise ValueError("API key not set.")
         client = OpenAI(api_key=self._api_key)
-        if (kmodel := kwargs.pop("model", None) or kwargs.pop(
-            "engine", None)):
+        if kmodel := kwargs.pop("model", None) or kwargs.pop("engine", None):
             model = kmodel
         response = client.chat.completions.create(
-            model=model,
-            messages=[{"role": "user", "content": query}],
-            **kwargs
+            model=model, messages=[{"role": "user", "content": query}], **kwargs
         )
         return response if details else response.choices[0].message.content
 
@@ -35,5 +32,5 @@ class OpenAIModel(BaseModel):
 
         def create(self, engine, prompt, **kwargs):
             if engine:
-                kwargs['engine'] = engine
+                kwargs["engine"] = engine
             return self.parent.query(prompt, details=True, **kwargs)

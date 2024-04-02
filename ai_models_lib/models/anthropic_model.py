@@ -18,15 +18,14 @@ class AnthropicModel(BaseModel):
         if self._api_key is None:
             raise ValueError("API key not set.")
         client = self.client
-        if (kmodel := kwargs.pop("model", None) or kwargs.pop(
-            "engine", None)):
+        if kmodel := kwargs.pop("model", None) or kwargs.pop("engine", None):
             model = kmodel
-        max_tokens = kwargs.pop("max_tokens", 1000)
+        max_tokens = kwargs.pop("max_tokens", 100)
         response = client.messages.create(
             model=model,
             max_tokens=max_tokens,
             messages=[{"role": "user", "content": query}],
-            **kwargs
+            **kwargs,
         )
         return response if details else response.content[0].text
 
@@ -43,23 +42,24 @@ class AnthropicModel(BaseModel):
 
         def create(self, engine, prompt, **kwargs):
             if engine:
-                kwargs['model'] = engine
+                kwargs["model"] = engine
             response = self.parent.query(prompt, details=True, **kwargs)
             transformed_response = {
                 "id": response.id,
                 "object": response.type,
                 "model": response.model,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": response.role,
-                        "content": response.content[0].text
-                    },
-                    "logprobs": None,
-                    "finish_reason": response.stop_reason
-                }],
-                "usage": response.usage
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {
+                            "role": response.role,
+                            "content": response.content[0].text,
+                        },
+                        "logprobs": None,
+                        "finish_reason": response.stop_reason,
+                    }
+                ],
+                "usage": response.usage,
             }
 
             return transformed_response
-

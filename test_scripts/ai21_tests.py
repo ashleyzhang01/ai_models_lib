@@ -10,7 +10,9 @@ API_KEY = os.environ.get("AI21_API_KEY")
 def test_query_by_provider():
     # test for just message
     response = ai_models_lib.query(
-        "ai21", API_KEY, "If you gradually replace all parts of a car one by one over time, until none of the original pieces remain, is it still the same car?"
+        "ai21",
+        API_KEY,
+        "If you gradually replace all parts of a car one by one over time, until none of the original pieces remain, is it still the same car?",
     )
     print(response)
 
@@ -19,8 +21,8 @@ def test_query_simplified():
     ai21_client = ai21(API_KEY)
     response = ai21_client.query(
         model="j2-mid",
-        query="If you drop a soap on the floor will the soap make the floor clean or will the floor make the soap dirty?", 
-        details=True
+        query="If you drop a soap on the floor will the soap make the floor clean or will the floor make the soap dirty?",
+        details=True,
     )
     print(response.completions[0].data.text)
     print(response)

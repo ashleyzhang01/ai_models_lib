@@ -18,15 +18,10 @@ class ReplicateModel(BaseModel):
         if self._api_key is None:
             raise ValueError("API key not set.")
         client = self.client
-        if (kmodel := kwargs.pop("model", None) or kwargs.pop(
-            "engine", None)):
+        if kmodel := kwargs.pop("model", None) or kwargs.pop("engine", None):
             model = kmodel
-        response = client.run(
-            model,
-            input={"prompt": query},
-            **kwargs
-        )
-        return ''.join(response)
+        response = client.run(model, input={"prompt": query}, **kwargs)
+        return "".join(response)
         # return response if details else response.content[0].text
 
     class Completion:
@@ -35,22 +30,20 @@ class ReplicateModel(BaseModel):
 
         def create(self, engine, prompt, **kwargs):
             if engine:
-                kwargs['model'] = engine
+                kwargs["model"] = engine
             response = self.parent.query(prompt, details=True, **kwargs)
 
             transformed_response = {
                 "id": None,
                 "object": "Replicate",
-                "model": kwargs.get('model', 'meta/llama-2-70b-chat'),
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": response
-                    },
-                    "finish_reason": "finished"
-                }]
+                "model": kwargs.get("model", "meta/llama-2-70b-chat"),
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {"role": "assistant", "content": response},
+                        "finish_reason": "finished",
+                    }
+                ],
             }
 
             return transformed_response
-

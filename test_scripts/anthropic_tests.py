@@ -32,9 +32,7 @@ def test_call_anthropic():
     anthropic_client = anthropic(API_KEY)
     response = anthropic_client.client.messages.create(
         max_tokens=50,
-        messages=[
-            {"role": "user", "content": "What is the capital of France?"}
-        ],
+        messages=[{"role": "user", "content": "What is the capital of France?"}],
         model="claude-3-opus-20240229",
     )
     print(response.content[0].text)

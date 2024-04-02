@@ -9,13 +9,9 @@ API_KEY = os.environ.get("OPENAI_API_KEY")
 
 def test_query_by_provider():
     # test for just message
-    response = ai_models_lib.query(
-        "OpenAI", API_KEY, "What is the capital of Germany?"
-    )
+    response = ai_models_lib.query("OpenAI", API_KEY, "What is the capital of Germany?")
     print(response)
-    response = ai_models_lib.query(
-        "open ai", API_KEY, "What is the color of fire?"
-    )
+    response = ai_models_lib.query("open ai", API_KEY, "What is the color of fire?")
     print(response)
 
 
@@ -58,10 +54,7 @@ def test_call_openai():
     # TODO: test with kwargs
     # images
     image = openai_client.client.images.generate(
-        model="dall-e-3",
-        prompt="A cute baby sea otter",
-        n=1,
-        size="1024x1024"
+        model="dall-e-3", prompt="A cute baby sea otter", n=1, size="1024x1024"
     )
     print(image)
     print(image.data[0].url)
