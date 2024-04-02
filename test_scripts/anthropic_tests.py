@@ -50,13 +50,14 @@ def test_openai_format():
         temperature=0.7,
         top_p=1,
     )
-    print(response.content[0].text)
+    # print(response)
+    print(response["choices"][0]["message"]["content"])
 
 
 def main():
-    test_query_by_provider()
-    test_query_simplified()
-    test_call_anthropic()
+    # test_query_by_provider()
+    # test_query_simplified()
+    # test_call_anthropic()
     test_openai_format()
 
 

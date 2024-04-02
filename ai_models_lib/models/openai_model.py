@@ -33,4 +33,6 @@ class OpenAIModel(BaseModel):
             self.parent = parent
 
         def create(self, engine, prompt, **kwargs):
-            return self.parent.query(prompt, engine, **kwargs)
+            if engine:
+                kwargs['engine'] = engine
+            return self.parent.query(prompt, details=True, **kwargs)

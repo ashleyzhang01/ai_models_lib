@@ -44,5 +44,23 @@ class AnthropicModel(BaseModel):
         def create(self, engine, prompt, **kwargs):
             if engine:
                 kwargs['model'] = engine
-            return self.parent.query(prompt, engine, **kwargs)
+            response = self.parent.query(prompt, details=True, **kwargs)
+            print(response)
+            transformed_response = {
+                "id": response.id,
+                "object": response.type,
+                "model": response.model,
+                "choices": [{
+                    "index": 0,
+                    "message": {
+                        "role": response.role,
+                        "content": response.content[0].text
+                    },
+                    "logprobs": None,
+                    "finish_reason": response.stop_reason
+                }],
+                "usage": response.usage
+            }
+
+            return transformed_response
 
