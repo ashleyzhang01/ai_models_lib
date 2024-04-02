@@ -1,42 +1,35 @@
-from anthropic import Anthropic
+from ai21 import AI21Client
 
 from ..base_model import BaseModel
 
 
-class AnthropicModel(BaseModel):
+class AI21Model(BaseModel):
     def __init__(self, api_key):
         super().__init__(api_key)
         self._api_key = api_key
-        self.client = Anthropic(api_key=self._api_key)
+        self.client = AI21Client(api_key=self._api_key)
         self.Completion = self.Completion(self)
 
     def set_api_key(self, key):
         super().set_api_key(key)
-        self.client = Anthropic(api_key=self._api_key)
+        self.client = AI21Client(api_key=self._api_key)
 
-    def query(self, query, model="claude-3-opus-20240229", details=False, **kwargs):
+    def query(self, query, model="j2-mid", details=False, **kwargs):
         if self._api_key is None:
             raise ValueError("API key not set.")
         client = self.client
         if (kmodel := kwargs.pop("model", None) or kwargs.pop(
             "engine", None)):
             model = kmodel
-        max_tokens = kwargs.pop("max_tokens", 1000)
-        response = client.messages.create(
+        max_tokens = kwargs.pop("max_tokens", 100)
+        response = client.completion.create(
             model=model,
             max_tokens=max_tokens,
-            messages=[{"role": "user", "content": query}],
+            prompt=query,
             **kwargs
         )
-        return response if details else response.content[0].text
+        return response if details else response.completions[0].data.text
 
-    # class Messages:
-    #     def __init__(self, parent):
-    #         self.parent = parent
-    #
-    #     def create(self, messages, **kwargs):
-    #         prompt = messages[0].get('content')
-    #         return self.parent.query(prompt, **kwargs)
     class Completion:
         def __init__(self, parent):
             self.parent = parent
@@ -47,18 +40,16 @@ class AnthropicModel(BaseModel):
             response = self.parent.query(prompt, details=True, **kwargs)
             transformed_response = {
                 "id": response.id,
-                "object": response.type,
-                "model": response.model,
+                "object": "completions",
+                "model": kwargs.get('model', 'j2-mid'),
                 "choices": [{
                     "index": 0,
                     "message": {
-                        "role": response.role,
-                        "content": response.content[0].text
+                        "role": "assistant",
+                        "content": response.completions[0].data.text
                     },
-                    "logprobs": None,
-                    "finish_reason": response.stop_reason
+                    "finish_reason": response.completions[0].finish_reason.reason
                 }],
-                "usage": response.usage
             }
 
             return transformed_response

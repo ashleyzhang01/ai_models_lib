@@ -19,7 +19,7 @@ class ReplicateModel(BaseModel):
             raise ValueError("API key not set.")
         client = self.client
         if (kmodel := kwargs.pop("model", None) or kwargs.pop(
-            "engine", "meta/llama-2-70b-chat")):
+            "engine", None)):
             model = kmodel
         response = client.run(
             model,
@@ -41,7 +41,7 @@ class ReplicateModel(BaseModel):
             transformed_response = {
                 "id": None,
                 "object": "Replicate",
-                "model": engine or kwargs.get('model', 'meta/llama-2-70b-chat'),
+                "model": kwargs.get('model', 'meta/llama-2-70b-chat'),
                 "choices": [{
                     "index": 0,
                     "message": {

@@ -23,10 +23,8 @@ def test_query_by_provider():
 
 def test_query_simplified():
     replicate_client = replicate(API_KEY)
-    response = replicate_client.query("Is water wet?")
+    response = replicate_client.query("Is water wet?", "meta/llama-2-70b-chat")
     print(response)
-    # TODO: test with kwargs
-    # TODO: test model
 
 
 def test_call_replicate():
@@ -53,9 +51,9 @@ def test_openai_format():
 
 def main():
     # test_query_by_provider()
-    # test_query_simplified()
+    test_query_simplified()
     # test_call_replicate()
-    test_openai_format()
+    # test_openai_format()
 
 
 if __name__ == "__main__":

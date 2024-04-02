@@ -20,7 +20,7 @@ class TogetherModel(BaseModel):
             raise ValueError("API key not set.")
         together.api_key = self._api_key
         if (kmodel := kwargs.pop("model", None) or kwargs.pop(
-            "engine", "mistralai/Mixtral-8x7B-Instruct-v0.1")):
+            "engine", None)):
             model = kmodel
         response = together.Complete.create(
             prompt=f"[INST] {query} [/INST]",
