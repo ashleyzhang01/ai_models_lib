@@ -7,3 +7,10 @@ class BaseModel:
 
     def query(self, *args, **kwargs):
         raise NotImplementedError("Subclasses must implement this method.")
+
+    class Completion:
+        def __init__(self, parent):
+            self.parent = parent
+
+        def create(self, engine, prompt, **kwargs):
+            raise NotImplementedError("Subclasses must implement this method.")

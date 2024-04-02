@@ -61,10 +61,10 @@ def test_call_openai():
 
 
 def main():
-    # test_query_by_provider()
+    test_query_by_provider()
     test_query_simplified()
     test_call_client_deprecated()
-    # test_call_openai()
+    test_call_openai()
 
 
 if __name__ == "__main__":

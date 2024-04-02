@@ -24,8 +24,6 @@ def test_query_simplified():
     )
     print(response["output"]["choices"][0]["text"])
     print(response)
-    # TODO: test with kwargs
-    # TODO: test model vs engine
 
 
 def test_openai_format():
@@ -37,7 +35,6 @@ def test_openai_format():
         temperature=0.8,
     )
     print(response["choices"][0]["message"]["content"])
-    # TODO: test without kwargs
 
 
 def main():

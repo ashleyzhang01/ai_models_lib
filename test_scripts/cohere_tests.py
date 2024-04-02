@@ -12,7 +12,7 @@ def test_query_by_provider():
     response = ai_models_lib.query(
         "cohere", API_KEY, "Should I eat ice cream or macarons? Randomly choose one."
     )
-    print(response.text)
+    print(response)
 
 
 def test_query_simplified():
@@ -20,10 +20,13 @@ def test_query_simplified():
     response = cohere_client.query(
         details=True,
         chat_history=[
-            {"role": "USER", "message": "Should I eat ice cream or macarons? Randomly choose one."},
-            {"role": "CHATBOT", "message": "Ice cream."}
+            {
+                "role": "USER",
+                "message": "Should I eat ice cream or macarons? Randomly choose one.",
+            },
+            {"role": "CHATBOT", "message": "Ice cream."},
         ],
-        query="Should I eat it tonight or tomorrow morning?", 
+        query="Should I eat it tonight or tomorrow morning?",
     )
     print(response.text)
     # print(response)
@@ -45,16 +48,16 @@ def test_openai_format():
         engine="command",
         prompt="Should I wear brown or white tomorrow? randomly choose one.",
         max_tokens=50,
-        temperature=0.7
+        temperature=0.7,
     )
     # print(response)
     print(response["choices"][0]["message"]["content"])
 
 
 def main():
-    # test_query_by_provider()
-    # test_query_simplified()
-    # test_call_cohere()
+    test_query_by_provider()
+    test_query_simplified()
+    test_call_cohere()
     test_openai_format()
 
 

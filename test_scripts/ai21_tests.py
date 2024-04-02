@@ -53,9 +53,9 @@ def test_openai_format():
 
 
 def main():
-    # test_query_by_provider()
-    # test_query_simplified()
-    # test_call_ai21()
+    test_query_by_provider()
+    test_query_simplified()
+    test_call_ai21()
     test_openai_format()
 
 

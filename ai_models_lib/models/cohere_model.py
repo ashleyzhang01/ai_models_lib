@@ -34,7 +34,7 @@ class CohereModel(BaseModel):
             response = self.parent.query(prompt, details=True, **kwargs)
             transformed_response = {
                 "id": response.generation_id,
-                "model": kwargs.get('model', 'command'),
+                "model": kwargs.get("model", "command"),
                 "choices": [
                     {
                         "index": 0,

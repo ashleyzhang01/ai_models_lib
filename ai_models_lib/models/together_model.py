@@ -37,8 +37,7 @@ class TogetherModel(BaseModel):
             self.parent = parent
 
         def create(self, engine, prompt, **kwargs):
-            response = self.parent.query(prompt, engine, **kwargs)
-
+            response = self.parent.query(prompt, engine, details=True, **kwargs)
             transformed_response = {
                 "id": response["id"],
                 "object": "chat.completion",

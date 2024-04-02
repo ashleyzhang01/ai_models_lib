@@ -48,7 +48,6 @@ def test_openai_format():
         temperature=0.7,
         top_p=1,
     )
-    # print(response)
     print(response["choices"][0]["message"]["content"])
 
 
